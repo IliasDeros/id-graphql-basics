@@ -5,7 +5,8 @@ const {
     GraphQLObjectType,
     GraphQLSchema,
     GraphQLString,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLList
 } = require('graphql')
 
 const AuthorType = new GraphQLObjectType({
@@ -14,11 +15,35 @@ const AuthorType = new GraphQLObjectType({
 
     fields(){
         return {
+            books: { 
+                type: GraphQLList(BookType),
+                resolve(xml){
+                    return xml.GoodreadsResponse.author[0].books[0].book
+                }
+            },
             name: { 
                 type: GraphQLString,
                 resolve(xml){
                     return xml.GoodreadsResponse.author[0].name[0]
                 }
+            }
+        }
+    }
+})
+
+const BookType = new GraphQLObjectType({
+    name: 'Book',
+    description: 'optional...',
+
+    fields(){
+        return {
+            isbn: {
+                type: GraphQLString,
+                resolve(xml){ return xml.isbn[0] }
+            },
+            title: { 
+                type: GraphQLString,
+                resolve(xml){ return xml.title[0] }
             }
         }
     }

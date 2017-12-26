@@ -20,3 +20,11 @@ Query an author's name
         name
       }
     }
+
+Query an author's books
+
+    query {
+      author(id: 4432) {
+        books { isbn, title }
+      }
+    }
