@@ -7,13 +7,13 @@ Playing around with graphql following the tutorial at https://www.youtube.com/wa
 * `yarn` [optional]
 
 ## Getting started
-1- Checkout this repository
-2- run `yarn` or `npm install`
-3- execute server using `APIKEY=<goodreads api key> node serve.js`
-4- Play around with API on `localhost:4000`
+1. Checkout this repository
+2. run `yarn` or `npm install`
+3. execute server using `APIKEY=<goodreads api key> node serve.js`
+4. Play around with API on `localhost:4000`
 
 ## Examples
-Query an author's name
+Query an author's *name*
 
     query {
       author(id: 4432) {
@@ -21,7 +21,7 @@ Query an author's name
       }
     }
 
-Query an author's books
+Query an author's *books*
 
     query {
       author(id: 4432) {
