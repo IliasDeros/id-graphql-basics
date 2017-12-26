@@ -1,4 +1,4 @@
-# A GraphQL Experiment
+# A GraphQL Experiment ![Build Status](https://travis-ci.org/IliasDeros/id-graphql-basics.svg?branch=master)](https://travis-ci.org/IliasDeros/id-graphql-basics)
 Query an external REST API that returns big, hard to manage XML files and format response into JSON
 
 ## Prerequisites
