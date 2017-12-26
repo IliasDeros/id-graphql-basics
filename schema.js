@@ -9,6 +9,13 @@ const {
     GraphQLList
 } = require('graphql')
 
+async function getJSON(url){        
+    let response = await fetch(url),
+        responseXml = await response.text()
+
+    return await parseXML(responseXml)
+}
+
 const AuthorType = new GraphQLObjectType({
     name: 'Author',
     description: 'optional?',
@@ -17,8 +24,11 @@ const AuthorType = new GraphQLObjectType({
         return {
             books: { 
                 type: GraphQLList(BookType),
-                resolve(xml){
-                    return xml.GoodreadsResponse.author[0].books[0].book
+                async resolve(xml){
+                    const ids = xml.GoodreadsResponse.author[0].books[0].book.map(b => b.id[0]._)
+                    return Promise.all(ids.map(id => 
+                        getJSON(`https://www.goodreads.com/book/show/${id}.xml?key=${process.env.APIKEY}`)
+                    ))
                 }
             },
             name: { 
@@ -39,11 +49,11 @@ const BookType = new GraphQLObjectType({
         return {
             isbn: {
                 type: GraphQLString,
-                resolve(xml){ return xml.isbn[0] }
+                resolve(xml){ return xml.GoodreadsResponse.book[0].isbn[0] }
             },
             title: { 
                 type: GraphQLString,
-                resolve(xml){ return xml.title[0] }
+                resolve(xml){ return xml.GoodreadsResponse.book[0].title[0] }
             }
         }
     }
@@ -62,11 +72,7 @@ module.exports = new GraphQLSchema({
                         id: { type: GraphQLInt }
                     },
                     async resolve(root, args){
-                        let response = await fetch(
-                            `https://www.goodreads.com/author/show.xml?key=${process.env.APIKEY}&id=${args.id}`
-                        )
-                        let responseXml = await response.text()
-                        return await parseXML(responseXml)
+                        return getJSON(`https://www.goodreads.com/author/show.xml?key=${process.env.APIKEY}&id=${args.id}`)
                     }
                 }
             }
