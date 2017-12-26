@@ -1,5 +1,5 @@
 # A GraphQL Experiment
-Playing around with graphql following the tutorial at https://www.youtube.com/watch?v=lAJWHHUz8_8
+Query an external REST API that returns big, hard to manage XML files and format response into JSON
 
 ## Prerequisites
 * An API key from https://www.goodreads.com/
@@ -10,7 +10,7 @@ Playing around with graphql following the tutorial at https://www.youtube.com/wa
 1. Checkout this repository
 2. run `yarn` or `npm install`
 3. execute server using `APIKEY=<goodreads api key> node serve.js`
-4. Play around with API on `localhost:4000`
+4. Play around with API on `localhost:4000/graphql`
 
 ## Examples
 Query an author's *name*
